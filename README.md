@@ -4,6 +4,10 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/downloads/)[![GitHub Stars](https://img.shields.io/github/stars/Awelling2/FileMerge)](https://github.com/Awelling2/FileMerge/stargazers)
 
+## 💡 演示
+
+<img src="photos/demo.png" alt="演示界面" width="300"/>
+
 ## 💡 简介
 
 作为一名前眼科医生，我深知医疗工作者面临的文书工作压力。从最初使用 Excel 批量处理病历，到通过自学 Python 和靠不停的问 AI 而完成的这个项目，FileMerge 诞生于解决实际临床工作中的效率需求。
@@ -150,3 +154,9 @@ FileMerge/
 
 ![GitHub issues](https://img.shields.io/github/issues/Awelling2/FileMerge)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/Awelling2/FileMerge)
+
+## ❤️ 支持项目
+
+如果这个项目对您有帮助，欢迎扫码支持，这将鼓励我继续维护和改进这个项目！
+
+<img src="photos/wechat_pay.jpg" alt="微信赞赏码" width="200"/>
