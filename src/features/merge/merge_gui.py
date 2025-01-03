@@ -209,12 +209,15 @@ class MergeGUI(BaseGUI):
         """当输入值改变时更新数据"""
         value = self.widget_vars[key].get()
         if isinstance(self.case_keyword[key], list):
-            # 如果是列表类型，保持列表结构，但将当前选择的值放在第一
-            if value in self.case_keyword[key]:
-                values = self.case_keyword[key].copy()
+            # 如果是列表类型，保持列表结构，但将当前值放在第一位
+            # 如果是手动输入的新值，也将其添加到列表中
+            values = self.case_keyword[key].copy()
+            if value not in values:
+                values.insert(0, value)  # 将新值添加到列表开头
+            else:
                 values.remove(value)
                 values.insert(0, value)
-                self.case_keyword[key] = values
+            self.case_keyword[key] = values
         else:
             # 如果是普通值，直接更新
             self.case_keyword[key] = value
@@ -347,15 +350,8 @@ class MergeGUI(BaseGUI):
             
             # 处理列表类型的数据
             if isinstance(self.case_keyword[key], list):
-                if value in self.case_keyword[key]:
-                    # 将选中的值放在列表第一位
-                    values = self.case_keyword[key].copy()
-                    values.remove(value)
-                    values.insert(0, value)
-                    updated_data[key] = value  # 只保存选中的值，不保存整个列表
-                else:
-                    # 如果值不在列表中，使用第一个值
-                    updated_data[key] = self.case_keyword[key][0] if self.case_keyword[key] else ""
+                # 直接使用用户输入的值，无论是否在列表中
+                updated_data[key] = value
             else:
                 # 如果是必填字段且为空，抛出异常
                 if key in REQUIRED_FIELDS and not value.strip():
@@ -426,7 +422,7 @@ class MergeGUI(BaseGUI):
             self.browse_config_btn.configure(state='disabled')
             self.browse_template_btn.configure(state='disabled')
             
-            # 加载默认配��
+            # 加载默认配置
             try:
                 self.case_keyword = self.file_handler.read_json_data(self.current_config_path)
                 self._create_data_widgets()
@@ -678,3 +674,36 @@ class MergeGUI(BaseGUI):
                 messagebox.showerror("错误", "未找到最近合成的Excel文件")
         except Exception as e:
             messagebox.showerror("错误", str(e))
+
+    def generate_document(self):
+        """生成文档"""
+        try:
+            # 获取所有控件的最新值
+            data = self.get_all_values()
+            
+            # 继续原有的文档生成逻辑
+            if self.current_type == "docx":
+                self.generate_docx(data)
+            else:
+                self.generate_xlsx(data)
+                
+        except Exception as e:
+            self.show_error(f"生成文档失败: {str(e)}")
+
+    def generate_docx(self, data):
+        """生成Word文档"""
+        try:
+            # 使用最新的数据生成文档
+            self.docx_merger.merge(data)
+            self.show_success("Word文档生成成功！")
+        except Exception as e:
+            self.show_error(f"生成Word文档失败: {str(e)}")
+
+    def generate_xlsx(self, data):
+        """生成Excel文档"""
+        try:
+            # 使用最新的数据生成文档
+            self.xlsx_merger.merge(data)
+            self.show_success("Excel文档生成成功！")
+        except Exception as e:
+            self.show_error(f"生成Excel文档失败: {str(e)}")

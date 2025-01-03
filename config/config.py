@@ -4,7 +4,7 @@ import os
 PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 # 版本信息
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 AUTHOR = "Awelling2"
 EMAIL = "zx824548472@gmail.com"
 
